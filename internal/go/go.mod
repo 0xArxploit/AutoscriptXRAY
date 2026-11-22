@@ -1,3 +1,3 @@
-module github.com/abdorabie2590/AutoscriptXRAY/internal/go
+module github.com/0xArxploit/AutoscriptXRAY/internal/go
 
 go 1.19

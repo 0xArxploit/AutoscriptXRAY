@@ -1,8 +1,21 @@
+<div align="center">
+
 # ✦ Abdelrahman AutoScript ✦
 
-> **Developed by Eng.Abdelrahman Rabie**
-> Interface: violet → magenta gradient, neon accents, framed menus and a shared theme engine (`theme.sh`).
+**Install and manage a multi-protocol VPN server from one colorful terminal menu.**
 
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
+[![Debian](https://img.shields.io/badge/Debian-11%20%7C%2012-A81D33?logo=debian&logoColor=white)](#compatibility-intended-targets)
+[![Ubuntu](https://img.shields.io/badge/Ubuntu-20.04%20%7C%2022.04-E95420?logo=ubuntu&logoColor=white)](#compatibility-intended-targets)
+[![Shell](https://img.shields.io/badge/Built%20with-Bash%20%2B%20Go-2EA44F?logo=gnu-bash&logoColor=white)](#features)
+
+*Developed by Eng. Abdelrahman Rabie*
+
+</div>
+
+AutoscriptXRAY is a collection of Bash installers and small Go services that set up SSH over WebSocket-style/SSL transports, an Xray core (VMess, VLESS, Trojan, Shadowsocks), WireGuard and UDP tunnels on a fresh VPS, and manage them through a single interactive menu. Every screen shares one violet-to-magenta theme, defined once in `theme.sh`.
+
+> **Status:** personal project under active development. The feature list describes what the scripts are designed to install and manage. No independent installation or connectivity validation has been performed on this code, so treat the tables below as design intent, not a support guarantee.
 
 ## Features
 
@@ -16,18 +29,15 @@
 | Dashboard   | Interactive Panel, Service Status, User Statistics, Traffic Statistics            |
 | Go Services | Native Dropbear WS, Native Stunnel WS, Multi-Connection Support                   |
 
----
-Open menu:
+Open the menu any time after installation:
 
 ```bash
 menu
 ```
 
----
-
 ## Quick Install
 
-> Note: This script must be run as root!
+> **Note:** this script must be run as root, on a fresh VPS.
 
 ```bash
 # update
@@ -38,16 +48,14 @@ apt install git curl screen sudo -y
 sysctl -w net.ipv6.conf.all.disable_ipv6=1
 sysctl -w net.ipv6.conf.default.disable_ipv6=1
 
-# clone the repos
+# clone the repo
 git clone https://github.com/0xArxploit/AutoscriptXRAY.git
 cd AutoscriptXRAY
 
-# run main installer
+# run the main installer
 chmod +x setup.sh
-chmod +x uninstall.sh
 screen -S setup ./setup.sh
 ```
----
 
 ## Default Ports
 
@@ -65,7 +73,9 @@ screen -S setup ./setup.sh
 | Trojan TLS     | 443     |
 | Shadowsocks WS | 443     |
 
----
+## Transport note: SSH "WebSocket" services
+
+The SSH WS services (`sshws/ws-dropbear.py`, `sshws/ws-stunnel.py` and the Go variants in `internal/go/`) implement a minimal HTTP `101 Switching Protocols` upgrade tunnel, the kind injector-style clients such as HTTP Injector or KPN Tunnel expect. They do not implement RFC 6455 WebSocket framing, so standards-compliant WebSocket clients are not interoperable with them. The Xray protocols are served by Xray-core behind NGINX with proper upgrade handling and are unaffected by this limitation.
 
 ## Debugging
 
@@ -96,41 +106,43 @@ systemctl status ws-dropbear
 systemctl status ws-stunnel
 ```
 
-Check UDP Tunnel:
+Check the UDP tunnels:
 
 ```bash
 systemctl status udp-custom
 systemctl status udpgw
 ```
 
----
+## Compatibility (intended targets)
 
-## Compatibility
+These are the installer's intended targets, as designed. They are not independently verified: behavior can vary between provider images and configurations.
 
-| OS           | Status        |
-| ------------ | ------------- |
-| Debian 12    | ⭐ Recommended |
-| Debian 11    | ✅ Supported   |
-| Ubuntu 22.04 | ✅ Supported   |
-| Ubuntu 20.04 | ⚠ Limited     |
-| Debian 10    | ❌ Deprecated  |
-| OpenVZ       | ❌ Unsupported |
-| KVM          | ✅ Recommended |
-| VMware       | ✅ Recommended |
+| OS           | Intended status |
+| ------------ | --------------- |
+| Debian 12    | ⭐ Recommended   |
+| Debian 11    | ✅ Intended      |
+| Ubuntu 22.04 | ✅ Intended      |
+| Ubuntu 20.04 | ⚠ Limited       |
+| Debian 10    | ❌ Deprecated    |
+| OpenVZ       | ❌ Unsupported   |
+| KVM          | ✅ Recommended   |
+| VMware       | ✅ Recommended   |
 
----
+## Notes
 
-## ⚠ Notes
-
-* Recommended fresh VPS installation
-* Recommended minimum RAM 1GB
-* Domain required for XRAY TLS
+* Recommended on a fresh VPS, minimum 1 GB RAM
+* A domain is required for XRAY TLS
 * Cloudflare supported
 * Enhanced payload supported
 
----
+## Theme
 
-## ❤️ Credits
+All screens share one palette defined in `theme.sh` (installed to `/etc/autoscriptvpn/theme.sh`).
+Change the colours once and every menu follows. Requires a 256-colour terminal.
+
+## Credits
+
+This project stands on the shoulders of:
 
 * XTLS / Xray-core
 * BadVPN
@@ -138,15 +150,6 @@ systemctl status udpgw
 * acme.sh
 * NGINX
 
----
+## License
 
-## 🎨 Theme
-
-All screens share one palette defined in `theme.sh` (installed to `/etc/autoscriptvpn/theme.sh`).
-Change the colours there once and every menu follows. Requires a 256-colour terminal.
-
----
-
-## © Rights
-
-Copyright (c) 2026 Eng.Abdelrahman Rabie. Based on AutoscriptXRAY (MIT) — see `LICENSE` and `NOTICE`.
+Copyright (c) 2026 Eng. Abdelrahman Rabie. Based on AutoscriptXRAY (MIT), see `LICENSE` and `NOTICE`.

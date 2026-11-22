@@ -49,7 +49,7 @@ sysctl -w net.ipv6.conf.all.disable_ipv6=1
 sysctl -w net.ipv6.conf.default.disable_ipv6=1
 
 # clone the repo
-git clone https://github.com/0xArxploit/AutoscriptXRAY.git
+git clone https://github.com/PacketBreaker/AutoscriptXRAY.git
 cd AutoscriptXRAY
 
 # run the main installer
@@ -149,6 +149,10 @@ This project stands on the shoulders of:
 * WireGuard
 * acme.sh
 * NGINX
+
+## Support
+
+[abdelrahmanrabie.24@gmail.com](mailto:abdelrahmanrabie.24@gmail.com)
 
 ## License
 
